@@ -13,4 +13,11 @@ class TodosController < ApplicationController
 		@todo = Todo.create(task: params[:task])
 		render json: @todo
 	end
+
+	def update
+		@todo = Todo.find_by_id(params[:id])
+		@todo.update(complete: params[:complete])
+		render json: @todo
+	end
+
 end

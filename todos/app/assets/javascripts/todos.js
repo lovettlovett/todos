@@ -1,18 +1,32 @@
 $("<ul class='todos'></ul>").appendTo("body");
-var counter = 0;
+var counter = 1;
 // var toDoText; 
 
-var addToDo = function(toDoText){
+var addToDo = function(toDoText, completeness){
 	$("<li class='todo' id='"+counter+"'>"+toDoText+"</li>").appendTo("ul")
 	$("<input id='complete"+counter+"' type='checkbox'></input>").appendTo("li#"+counter);
+	
+	if(completeness === true){
+			$("li#"+counter).addClass("complete")
+			$("input#complete"+counter).prop('checked', true)
+	}
 	$("<button>"+'x'+"</input>").appendTo("li#"+counter);
 
 	var checkBox = $("input#complete"+counter.toString());
 	//strikethrough
 
 	checkBox.on("click", function(e) {     
-		$(this).parent().toggleClass("complete")   
+		$(this).parent().toggleClass("complete") ;
+		id = $(this).parent().attr('id');
+
+
+		$.ajax({
+      type: "PUT",
+      url: "/todos/"+id,
+      data: {complete: !completeness}
+   	}); 
 	})
+
 
 	counter++;
 };
@@ -34,7 +48,7 @@ var allToDos = function(){
 	$.getJSON("/todos", function(response){
 		for(var i = 0; i < response.length; i++){
 			// $("<li>"+addToDo(response[i])+"</li>").appendTo("body")
-			addToDo(response[i].task);
+			addToDo(response[i].task, response[i].complete);
 		}
 	});
 };
