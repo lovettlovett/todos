@@ -2,7 +2,11 @@ class TodosController < ApplicationController
 	
 	def index
 		@todos = Todo.all
-		# render json: @todos
+		render json: @todos
+	end
+
+	def new
+		render(:new)
 	end
 
 	def create

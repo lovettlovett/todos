@@ -30,10 +30,14 @@ formField.addEventListener("submit", function(event){
 });
 
 
-var allToDos = function(){$.getJSON("/"), function(response){
-	for(var i = 0; i < response.length; i++){
-		$("<li>"+addToDo(response[i])+"</li>").appendTo("body")
-	}
-	};
+var allToDos = function(){
+	$.getJSON("/todos", function(response){
+		for(var i = 0; i < response.length; i++){
+			// $("<li>"+addToDo(response[i])+"</li>").appendTo("body")
+			addToDo(response[i].task);
+		}
+	});
 };
+
+allToDos();
 

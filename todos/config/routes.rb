@@ -1,5 +1,5 @@
 Todos::Application.routes.draw do
-  root "todos#index"
+  root "todos#new"
 
-  resources :todos, only: [:create, :delete, :update]
+  resources :todos, only: [:create, :delete, :update, :index]
 end
